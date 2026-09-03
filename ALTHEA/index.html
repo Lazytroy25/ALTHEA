@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALTHEA | Legal Office Management System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy: #10204a;
+    --navy-deep: #0b1733;
+    --gold: #d9a441;
+    --gold-light: #e8c274;
+    --bg: #f4f6fa;
+    --text-dark: #14213d;
+    --text-muted: #5b6478;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  html, body{
+    min-height:100%;
+  }
+
+  body{
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text-dark);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+
+  .page{
+    flex:1;
+    display:flex;
+    min-height: calc(100vh - 56px);
+  }
+
+  /* LEFT PANEL */
+  .left-panel{
+    position:relative;
+    flex: 0 0 42%;
+    max-width:42%;
+    background:
+      linear-gradient(160deg, rgba(11,23,51,0.92) 0%, rgba(16,32,74,0.85) 55%, rgba(16,32,74,0.75) 100%),
+      url('https://placehold.co/900x1200/0b1733/0b1733?text=+') center/cover no-repeat;
+    background-attachment: local;
+    color:#fff;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding: 60px 40px;
+    overflow:hidden;
+    clip-path: ellipse(78% 100% at 22% 50%);
+    flex-shrink:0;
+  }
+
+  .left-panel::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-right: 4px solid var(--gold);
+    clip-path: inherit;
+    pointer-events:none;
+  }
+
+  .logo-placeholder{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    border: 1.5px solid var(--gold-light);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom: 24px;
+    overflow:hidden;
+  }
+
+  .logo-placeholder img{
+    width:100%;
+    height:100%;
+    object-fit: cover;
+    opacity: 0.95;
+  }
+
+  .brand-name{
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+    font-size: 3.4rem;
+    letter-spacing: 6px;
+    color:#fff;
+    line-height:1;
+  }
+
+  .brand-sub{
+    margin-top: 14px;
+    letter-spacing: 3px;
+    font-size: 0.85rem;
+    font-weight:600;
+    color: var(--gold-light);
+    text-transform: uppercase;
+  }
+
+  .divider{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin: 26px 0;
+    width: 220px;
+  }
+  .divider .line{
+    flex:1;
+    height:1px;
+    background: linear-gradient(to right, transparent, var(--gold-light), transparent);
+  }
+  .divider .diamond{
+    width:8px;height:8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    flex-shrink:0;
+  }
+
+  .tagline{
+    font-size: 1rem;
+    line-height:1.6;
+    color: #dbe1ee;
+    font-weight:400;
+  }
+
+  /* RIGHT PANEL */
+  .right-panel{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding: 40px;
+  }
+
+  .right-inner{
+    width:100%;
+    max-width: 520px;
+  }
+
+  .welcome-title{
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+    font-size: 2.6rem;
+    color: var(--navy);
+    text-align:center;
+  }
+
+  .header-divider{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    margin: 20px 0 26px;
+  }
+  .header-divider .line{
+    width: 90px;
+    height:1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+  }
+  .header-divider .diamond{
+    width:9px;height:9px;
+    background: var(--gold);
+    transform: rotate(45deg);
+  }
+
+  .question{
+    text-align:center;
+    font-size: 1.15rem;
+    font-weight:600;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+  }
+
+  .subtext{
+    text-align:center;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 34px;
+  }
+
+  .option-card{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 20px;
+    background:#fff;
+    border-radius: 14px;
+    padding: 22px 26px;
+    box-shadow: 0 4px 18px rgba(16,32,74,0.07);
+    margin-bottom: 20px;
+  }
+
+  .option-left{
+    display:flex;
+    align-items:center;
+    gap:18px;
+  }
+
+  .icon-circle{
+    width: 52px;
+    height:52px;
+    border-radius:50%;
+    border: 1.5px solid var(--gold);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    color: var(--navy);
+  }
+
+  .icon-circle svg{ width:24px; height:24px; }
+
+  .option-text .title{
+    font-weight:600;
+    font-size:0.98rem;
+    color: var(--text-dark);
+    margin-bottom: 2px;
+  }
+
+  .option-text .desc{
+    font-size:0.86rem;
+    color: var(--text-muted);
+  }
+
+  .btn{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding: 13px 22px;
+    border-radius: 10px;
+    font-weight:600;
+    font-size:0.92rem;
+    border:none;
+    cursor:pointer;
+    white-space:nowrap;
+    text-decoration:none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:hover{ transform: translateY(-1px); }
+  .btn:focus-visible{ outline: 3px solid var(--gold-light); outline-offset:2px; }
+
+  .btn-primary{
+    background: var(--navy);
+    color:#fff;
+  }
+  .btn-primary:hover{ box-shadow: 0 6px 16px rgba(16,32,74,0.35); }
+
+  .btn-outline{
+    background:#fff;
+    color: var(--navy);
+    border: 1.5px solid var(--navy);
+  }
+  .btn-outline:hover{ box-shadow: 0 6px 16px rgba(16,32,74,0.15); }
+
+  .btn svg{ width:16px; height:16px; }
+
+  /* FOOTER */
+  .footer{
+    background: var(--navy-deep);
+    color: #cfd6e6;
+    text-align:center;
+    padding: 16px 20px;
+    font-size: 0.85rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+  }
+  .footer svg{ width:16px; height:16px; color: var(--gold); flex-shrink:0; }
+
+  @media (max-width: 900px){
+    .page{ flex-direction:column; }
+    .left-panel{
+      max-width:100%;
+      flex: none;
+      clip-path: ellipse(140% 100% at 50% 0%);
+      padding: 50px 30px 80px;
+    }
+    .left-panel::after{ display:none; }
+    .brand-name{ font-size: 2.4rem; letter-spacing:4px; }
+    .right-panel{ padding: 40px 24px; }
+    .welcome-title{ font-size: 2rem; }
+    .option-card{ flex-direction:column; align-items:flex-start; }
+    .option-card .btn{ width:100%; justify-content:center; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .btn{ transition:none; }
+  }
+
+  /* VIEW SWITCHING */
+  .view{
+    width:100%;
+    animation: fadeIn 0.35s ease;
+  }
+  .view.hidden{ display:none; }
+
+  @keyframes fadeIn{
+    from{ opacity:0; transform: translateY(8px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+
+  /* SIGN-IN CARD */
+  .auth-card{
+    background:#fff;
+    border-radius: 22px;
+    padding: 44px 40px;
+    box-shadow: 0 12px 40px rgba(16,32,74,0.12);
+  }
+
+  .back-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:none;
+    border:none;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight:600;
+    cursor:pointer;
+    margin-bottom: 18px;
+    padding:0;
+  }
+  .back-link:hover{ color: var(--navy); }
+  .back-link svg{ width:15px; height:15px; }
+
+  .auth-title{
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+    font-size: 2rem;
+    color: var(--navy);
+    text-align:center;
+  }
+
+  .auth-subtitle{
+    text-align:center;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-top: 6px;
+    margin-bottom: 18px;
+  }
+
+  .field{
+    display:flex;
+    align-items:center;
+    gap: 12px;
+    border: 1.5px solid #e3e7f0;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    background:#fff;
+    transition: border-color 0.15s ease;
+  }
+  .field:focus-within{ border-color: var(--gold); }
+
+  .field svg{ width:19px; height:19px; color: var(--text-muted); flex-shrink:0; }
+
+  .field input{
+    border:none;
+    outline:none;
+    flex:1;
+    font-family:'Inter', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    background:transparent;
+  }
+  .field input::placeholder{ color: #9aa2b5; }
+
+  .toggle-visibility{
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:0;
+    display:flex;
+    color: var(--text-muted);
+  }
+  .toggle-visibility:hover{ color: var(--navy); }
+
+  .row-between{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom: 22px;
+    font-size: 0.88rem;
+  }
+
+  .remember{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color: var(--text-dark);
+    cursor:pointer;
+  }
+  .remember input{
+    width:16px; height:16px;
+    accent-color: var(--navy);
+    cursor:pointer;
+  }
+
+  .forgot-link{
+    color:#2f5fd6;
+    text-decoration:none;
+    font-weight:500;
+  }
+  .forgot-link:hover{ text-decoration:underline; }
+
+  .btn-signin{
+    width:100%;
+    justify-content:center;
+    background: var(--navy);
+    color:#fff;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform:uppercase;
+    font-weight:700;
+  }
+  .btn-signin:hover{ box-shadow: 0 6px 16px rgba(16,32,74,0.35); }
+
+  .or-divider{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin: 20px 0;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+  .or-divider::before,
+  .or-divider::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:#e3e7f0;
+  }
+
+  .btn-google{
+    width:100%;
+    justify-content:center;
+    background:#fff;
+    border: 1.5px solid #e3e7f0;
+    color: var(--text-dark);
+    padding: 13px;
+    border-radius: 10px;
+  }
+  .btn-google:hover{ box-shadow: 0 6px 16px rgba(16,32,74,0.1); }
+  .btn-google svg{ width:20px; height:20px; }
+
+  .register-text{
+    text-align:center;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 24px;
+  }
+  .register-text a{
+    color:#2f5fd6;
+    font-weight:600;
+    text-decoration:none;
+  }
+  .register-text a:hover{ text-decoration:underline; }
+
+  /* CREATE ACCOUNT / ROLE SELECT CARD */
+  .role-icon-wrap{
+    display:flex;
+    justify-content:center;
+    margin-bottom: 10px;
+  }
+  .role-icon-wrap svg{
+    width:44px;
+    height:44px;
+    color: var(--navy);
+  }
+
+  .role-options{
+    margin-top: 26px;
+  }
+
+  .role-card{
+    display:flex;
+    align-items:center;
+    gap: 18px;
+    width:100%;
+    background:#fff;
+    border: 1.5px solid #e9ecf3;
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+    cursor:pointer;
+    text-align:left;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  }
+  .role-card:hover{
+    border-color: var(--gold);
+    box-shadow: 0 6px 18px rgba(16,32,74,0.08);
+    transform: translateY(-1px);
+  }
+  .role-card:focus-visible{ outline: 3px solid var(--gold-light); outline-offset:2px; }
+
+  .role-icon{
+    width: 54px;
+    height:54px;
+    border-radius:50%;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .role-icon svg{ width:26px; height:26px; }
+
+  .role-icon.user{ background:#eef1f8; color: var(--navy); }
+  .role-icon.staff{ background:#fbf1de; color: var(--gold); }
+  .role-icon.officer{ background:#eceef2; color: #5b6478; }
+
+  .role-text{ flex:1; }
+  .role-text .role-title{
+    font-weight:700;
+    font-size: 1.02rem;
+    color: var(--navy);
+    margin-bottom: 3px;
+  }
+  .role-text .role-desc{
+    font-size: 0.86rem;
+    color: var(--text-muted);
+    line-height:1.4;
+  }
+
+  .role-chevron{
+    color: var(--text-muted);
+    flex-shrink:0;
+  }
+  .role-chevron svg{ width:20px; height:20px; }
+
+  /* ROLE REGISTRATION FORMS */
+  .form-icon-circle{
+    width: 68px;
+    height:68px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin: 0 auto 14px;
+  }
+  .form-icon-circle svg{ width:30px; height:30px; }
+  .form-icon-circle.user{ background:#eef1f8; color: var(--navy); }
+  .form-icon-circle.staff{ background:#fbf1de; color: var(--gold); }
+  .form-icon-circle.officer{ background:#eceef2; color: #5b6478; }
+
+  .field select{
+    border:none;
+    outline:none;
+    flex:1;
+    width:100%;
+    font-family:'Inter', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    background:transparent;
+    appearance:none;
+    cursor:pointer;
+  }
+  .field select:invalid{ color: #9aa2b5; }
+  .field-chevron{ color: var(--text-muted); flex-shrink:0; pointer-events:none; }
+  .field-chevron svg{ width:16px; height:16px; }
+
+  .checkbox-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom: 22px;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+  }
+  .checkbox-row input{
+    width:16px; height:16px;
+    accent-color: var(--navy);
+    cursor:pointer;
+    flex-shrink:0;
+  }
+  .checkbox-row a{ color:#2f5fd6; text-decoration:none; font-weight:500; }
+  .checkbox-row a:hover{ text-decoration:underline; }
+
+  .btn-register{
+    width:100%;
+    justify-content:center;
+    background: var(--navy);
+    color:#fff;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform:uppercase;
+    font-weight:700;
+  }
+  .btn-register:hover{ box-shadow: 0 6px 16px rgba(16,32,74,0.35); }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- LEFT PANEL -->
+  <div class="left-panel">
+    <div class="logo-placeholder">
+      <img src="althea.jpg" alt="ALTHEA logo placeholder">
+    </div>
+    <div class="brand-name">ALTHEA</div>
+    <div class="brand-sub">Legal Office Management System</div>
+
+    <div class="divider">
+      <span class="line"></span>
+      <span class="diamond"></span>
+      <span class="line"></span>
+    </div>
+
+    <p class="tagline">Managing Legal Processes.<br>Ensuring Justice.</p>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right-panel">
+
+    <!-- VIEW 1: Welcome / choice screen -->
+    <div class="right-inner view" id="welcome-view">
+      <h1 class="welcome-title">Welcome to ALTHEA</h1>
+
+      <div class="header-divider">
+        <span class="line"></span>
+        <span class="diamond"></span>
+        <span class="line"></span>
+      </div>
+
+      <p class="question">Do you already have an account?</p>
+      <p class="subtext">Sign in to continue to your dashboard.</p>
+
+      <!-- Sign in option -->
+      <div class="option-card">
+        <div class="option-left">
+          <div class="icon-circle">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8a6 6 0 0 1 12 0"/><circle cx="12" cy="12" r="9.5"/></svg>
+          </div>
+          <div class="option-text">
+            <div class="title">If you already have an account,</div>
+            <div class="desc">please sign in.</div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary" id="show-signin-btn">
+          I have an account
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
+        </button>
+      </div>
+
+      <!-- Create account option -->
+      <div class="option-card">
+        <div class="option-left">
+          <div class="icon-circle">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+          </div>
+          <div class="option-text">
+            <div class="title">New to ALTHEA?</div>
+            <div class="desc">Create an account to get started.</div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-outline" id="show-register-btn">
+          Create an account
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- VIEW 2: Sign-in form -->
+    <div class="right-inner view hidden" id="signin-view">
+      <div class="auth-card">
+        <button type="button" class="back-link" id="back-to-welcome-btn">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5m0 0 6-6m-6 6 6 6"/></svg>
+          Back
+        </button>
+
+        <h2 class="auth-title">Welcome Back!</h2>
+        <p class="auth-subtitle">Sign in to your ALTHEA account</p>
+
+        <div class="header-divider">
+          <span class="line"></span>
+          <span class="diamond"></span>
+          <span class="line"></span>
+        </div>
+
+        <form id="signin-form">
+          <div class="field">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8a6 6 0 0 1 12 0"/><circle cx="12" cy="12" r="9.5"/></svg>
+            <input type="text" placeholder="Email or Username" autocomplete="username" required>
+          </div>
+
+          <div class="field">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            <input type="password" id="password-input" placeholder="Password" autocomplete="current-password" required>
+            <button type="button" class="toggle-visibility" id="toggle-password-btn" aria-label="Show password">
+              <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+
+          <div class="row-between">
+            <label class="remember">
+              <input type="checkbox">
+              Remember me
+            </label>
+            <a href="#" class="forgot-link">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn btn-signin">Sign In</button>
+        </form>
+
+        <div class="or-divider">or</div>
+
+        <button type="button" class="btn btn-google">
+          <svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5h-1.9V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.2-.1-2.4-.4-3.5Z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.6 15.9 18.9 13 24 13c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4c-7.4 0-13.8 4.1-17.1 10.1Z"/><path fill="#4CAF50" d="M24 44c5.5 0 10.4-1.9 14.3-5.1l-6.6-5.4c-2 1.4-4.6 2.3-7.7 2.3-5.2 0-9.6-3.3-11.3-7.9l-6.6 5.1C9.9 39.6 16.4 44 24 44Z"/><path fill="#1976D2" d="M43.6 20.5h-1.9V20H24v8h11.3c-.8 2.3-2.2 4.2-4.1 5.5l6.6 5.4C41.6 35.6 44 30.2 44 24c0-1.2-.1-2.4-.4-3.5Z"/></svg>
+          Sign in with Google
+        </button>
+
+        <p class="register-text">Don't have an account? <a href="#" id="show-register-link">Register</a></p>
+      </div>
+    </div>
+
+    <!-- VIEW 3: Create an Account / role selection -->
+    <div class="right-inner view hidden" id="register-view">
+      <div class="auth-card">
+        <button type="button" class="back-link" id="back-to-welcome-btn-2">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5m0 0 6-6m-6 6 6 6"/></svg>
+          Back
+        </button>
+
+        <div class="role-icon-wrap">
+          <svg fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5 12c0-3.3 2.7-6 6-6h1.5M17 8v6m3-3h-6"/></svg>
+        </div>
+        <h2 class="auth-title">Create an Account</h2>
+        <p class="auth-subtitle">Register as:</p>
+
+        <div class="header-divider">
+          <span class="line"></span>
+          <span class="diamond"></span>
+          <span class="line"></span>
+        </div>
+
+        <div class="role-options">
+          <button type="button" class="role-card" id="role-user-btn">
+            <div class="role-icon user">
+              <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8a6 6 0 0 1 12 0"/><circle cx="12" cy="12" r="9.5"/></svg>
+            </div>
+            <div class="role-text">
+              <div class="role-title">User</div>
+              <div class="role-desc">For individuals who want to submit and track legal requests.</div>
+            </div>
+            <div class="role-chevron">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m9 6 6 6-6 6"/></svg>
+            </div>
+          </button>
+
+          <button type="button" class="role-card" id="role-staff-btn">
+            <div class="role-icon staff">
+              <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1"/><circle cx="9" cy="7" r="3.2"/><path stroke-linecap="round" stroke-linejoin="round" d="M17.5 20v-1a4 4 0 0 0-2.5-3.7M14 3.5a3.2 3.2 0 0 1 0 6.9"/></svg>
+            </div>
+            <div class="role-text">
+              <div class="role-title">Legal Staff</div>
+              <div class="role-desc">For legal staff who will process and manage legal requests.</div>
+            </div>
+            <div class="role-chevron">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m9 6 6 6-6 6"/></svg>
+            </div>
+          </button>
+
+          <button type="button" class="role-card" id="role-officer-btn">
+            <div class="role-icon officer">
+              <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3.5" y="8" width="17" height="11" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M8.5 8V6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v2M3.5 13h17"/></svg>
+            </div>
+            <div class="role-text">
+              <div class="role-title">Legal Officer</div>
+              <div class="role-desc">For legal officers who will review, approve and manage cases.</div>
+            </div>
+            <div class="role-chevron">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m9 6 6 6-6 6"/></svg>
+            </div>
+          </button>
+        </div>
+
+        <p class="register-text">Already have an account? <a href="#" id="show-signin-link">Sign in</a></p>
+      </div>
+    </div>
+        <!-- VIEW 4: Register as User -->
+    <div class="right-inner view hidden" id="register-user-view">
+      <div class="auth-card">
+        <button type="button" class="back-link back-to-register-btn">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5m0 0 6-6m-6 6 6 6"/></svg>
+          Back
+        </button>
+
+        <div class="form-icon-circle user">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8a6 6 0 0 1 12 0"/><circle cx="12" cy="12" r="9.5"/></svg>
+        </div>
+        <h2 class="auth-title">Register as User</h2>
+        <p class="auth-subtitle">Create your user account</p>
+
+        <div class="header-divider">
+          <span class="line"></span>
+          <span class="diamond"></span>
+          <span class="line"></span>
+        </div>
+
+        <form class="role-register-form">
+          <div class="field">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8a6 6 0 0 1 12 0"/><circle cx="12" cy="12" r="9.5"/></svg>
+            <input type="text" placeholder="Full Name" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="m4 6.5 8 6 8-6"/></svg>
+            <input type="email" placeholder="Email Address" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8a6 6 0 0 1 12 0"/><circle cx="12" cy="12" r="9.5"/></svg>
+            <input type="text" placeholder="Username" autocomplete="username" required>
+          </div>
+          <div class="field">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            <input type="password" class="pw-input" placeholder="Password" autocomplete="new-password" required>
+            <button type="button" class="toggle-visibility pw-toggle" aria-label="Show password">
+              <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <div class="field">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            <input type="password" class="pw-input" placeholder="Confirm Password" autocomplete="new-password" required>
+            <button type="button" class="toggle-visibility pw-toggle" aria-label="Show password">
+              <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+
+          <label class="checkbox-row">
+            <input type="checkbox" required>
+            I agree to the <a href="#">Terms and Conditions</a>
+          </label>
+
+          <button type="submit" class="btn btn-register">Register</button>
+        </form>
+
+        <p class="register-text">Already have an account? <a href="#" class="show-signin-link-2">Sign in</a></p>
+      </div>
+    </div>
+        <!-- VIEW 5: Register as Legal Staff -->
+    <div class="right-inner view hidden" id="register-staff-view">
+      <div class="auth-card">
+        <button type="button" class="back-link back-to-register-btn">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5m0 0 6-6m-6 6 6 6"/></svg>
+          Back
+        </button>
+
+        <div class="form-icon-circle staff">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1"/><circle cx="9" cy="7" r="3.2"/><path stroke-linecap="round" stroke-linejoin="round" d="M17.5 20v-1a4 4 0 0 0-2.5-3.7M14 3.5a3.2 3.2 0 0 1 0 6.9"/></svg>
+        </div>
+        <h2 class="auth-title">Register as Legal Staff</h2>
+        <p class="auth-subtitle">Create your legal staff account</p>
+
+        <div class="header-divider">
+          <span class="line"></span>
+          <span class="diamond"></span>
+          <span class="line"></span>
+        </div>
+
+        <form class="role-register-form">
+          <div class="field">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8a6 6 0 0 1 12 0"/><circle cx="12" cy="12" r="9.5"/></svg>
+            <input type="text" placeholder="Full Name" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="m4 6.5 8 6 8-6"/></svg>
+            <input type="email" placeholder="Email Address" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8a6 6 0 0 1 12 0"/><circle cx="12" cy="12" r="9.5"/></svg>
+            <input type="text" placeholder="Username" autocomplete="username" required>
+          </div>
+          <div class="field">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            <input type="password" class="pw-input" placeholder="Password" autocomplete="new-password" required>
+            <button type="button" class="toggle-visibility pw-toggle" aria-label="Show password">
+              <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <div class="field">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            <input type="password" class="pw-input" placeholder="Confirm Password" autocomplete="new-password" required>
+            <button type="button" class="toggle-visibility pw-toggle" aria-label="Show password">
+              <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+
+          <label class="checkbox-row">
+            <input type="checkbox" required>
+            I agree to the <a href="#">Terms and Conditions</a>
+          </label>
+
+          <button type="submit" class="btn btn-register">Register</button>
+        </form>
+
+        <p class="register-text">Already have an account? <a href="#" class="show-signin-link-2">Sign in</a></p>
+      </div>
+    </div>
+        <!-- VIEW 6: Register as Legal Officer -->
+    <div class="right-inner view hidden" id="register-officer-view">
+      <div class="auth-card">
+        <button type="button" class="back-link back-to-register-btn">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5m0 0 6-6m-6 6 6 6"/></svg>
+          Back
+        </button>
+
+        <div class="form-icon-circle officer">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3.5" y="8" width="17" height="11" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M8.5 8V6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v2M3.5 13h17"/></svg>
+        </div>
+        <h2 class="auth-title">Register as Legal Officer</h2>
+        <p class="auth-subtitle">Create your legal officer account</p>
+
+        <div class="header-divider">
+          <span class="line"></span>
+          <span class="diamond"></span>
+          <span class="line"></span>
+        </div>
+
+        <form class="role-register-form">
+          <div class="field">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8a6 6 0 0 1 12 0"/><circle cx="12" cy="12" r="9.5"/></svg>
+            <input type="text" placeholder="Full Name" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="m4 6.5 8 6 8-6"/></svg>
+            <input type="email" placeholder="Email Address" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8a6 6 0 0 1 12 0"/><circle cx="12" cy="12" r="9.5"/></svg>
+            <input type="text" placeholder="Username" autocomplete="username" required>
+          </div>
+          <div class="field">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            <input type="password" class="pw-input" placeholder="Password" autocomplete="new-password" required>
+            <button type="button" class="toggle-visibility pw-toggle" aria-label="Show password">
+              <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <div class="field">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            <input type="password" class="pw-input" placeholder="Confirm Password" autocomplete="new-password" required>
+            <button type="button" class="toggle-visibility pw-toggle" aria-label="Show password">
+              <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <div class="field">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 21V10a2 2 0 0 1 2-2h4V5a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v3h4a2 2 0 0 1 2 2v11"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 21h16M9 9v0M15 9v0M9 13h.01M9 17h.01M15 13h.01M15 17h.01"/></svg>
+            <select required>
+              <option value="" selected disabled hidden>Institution / Office</option>
+              <option value="district-court">District Court</option>
+              <option value="appellate-court">Appellate Court</option>
+              <option value="public-prosecutor">Public Prosecutor's Office</option>
+              <option value="legal-aid">Legal Aid Bureau</option>
+              <option value="other">Other</option>
+            </select>
+            <span class="field-chevron">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"/></svg>
+            </span>
+          </div>
+          <div class="field">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="9" cy="10" r="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M6 16.5c.5-1.7 1.8-2.5 3-2.5s2.5.8 3 2.5M14 9h4M14 12.5h4"/></svg>
+            <input type="text" placeholder="Employee ID (Optional)">
+          </div>
+
+          <label class="checkbox-row">
+            <input type="checkbox" required>
+            I agree to the <a href="#">Terms and Conditions</a>
+          </label>
+
+          <button type="submit" class="btn btn-register">Register</button>
+        </form>
+
+        <p class="register-text">Already have an account? <a href="#" class="show-signin-link-2">Sign in</a></p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2 4 5v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V5l-8-3Z"/><path stroke-linecap="round" stroke-linejoin="round" d="m9 12 2 2 4-4"/></svg>
+  All accounts are subject to verification and approval by the System Administrator.
+</div>
+<script>
+  const views = {
+    welcome: document.getElementById('welcome-view'),
+    signin: document.getElementById('signin-view'),
+    register: document.getElementById('register-view'),
+    registerUser: document.getElementById('register-user-view'),
+    registerStaff: document.getElementById('register-staff-view'),
+    registerOfficer: document.getElementById('register-officer-view'),
+  };
+
+  let currentView = views.welcome;
+
+  function showView(target){
+    if (target === currentView) return;
+    currentView.classList.add('hidden');
+    target.classList.remove('hidden');
+    // restart the fade-in animation
+    target.style.animation = 'none';
+    void target.offsetWidth; // force reflow
+    target.style.animation = '';
+    currentView = target;
+  }
+
+  // Welcome view -> Sign in
+  document.getElementById('show-signin-btn').addEventListener('click', () => {
+    showView(views.signin);
+  });
+
+  // Welcome view -> Create an account
+  document.getElementById('show-register-btn').addEventListener('click', () => {
+    showView(views.register);
+  });
+
+  // Sign-in view -> back to welcome
+  document.getElementById('back-to-welcome-btn').addEventListener('click', () => {
+    showView(views.welcome);
+  });
+
+  // Sign-in view -> "Register" link goes to the role-selection screen
+  document.getElementById('show-register-link').addEventListener('click', (e) => {
+    e.preventDefault();
+    showView(views.register);
+  });
+
+  // Register (role-select) view -> back to welcome
+  document.getElementById('back-to-welcome-btn-2').addEventListener('click', () => {
+    showView(views.welcome);
+  });
+
+  // Register (role-select) view -> "Sign in" link goes to the sign-in form
+  document.getElementById('show-signin-link').addEventListener('click', (e) => {
+    e.preventDefault();
+    showView(views.signin);
+  });
+
+  // Role cards -> their respective registration forms
+  document.getElementById('role-user-btn').addEventListener('click', () => {
+    showView(views.registerUser);
+  });
+  document.getElementById('role-staff-btn').addEventListener('click', () => {
+    showView(views.registerStaff);
+  });
+  document.getElementById('role-officer-btn').addEventListener('click', () => {
+    showView(views.registerOfficer);
+  });
+
+  // Each role form's "Back" link returns to the role-selection screen
+  document.querySelectorAll('.back-to-register-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      showView(views.register);
+    });
+  });
+
+  // Each role form's "Sign in" link goes to the sign-in form
+  document.querySelectorAll('.show-signin-link-2').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      showView(views.signin);
+    });
+  });
+
+  // Password show/hide toggle for the main sign-in field
+  const passwordInput = document.getElementById('password-input');
+  const togglePasswordBtn = document.getElementById('toggle-password-btn');
+
+  togglePasswordBtn.addEventListener('click', () => {
+    const isHidden = passwordInput.type === 'password';
+    passwordInput.type = isHidden ? 'text' : 'password';
+    togglePasswordBtn.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
+  });
+
+  // Password show/hide toggles for all role registration forms
+  document.querySelectorAll('.pw-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const input = btn.previousElementSibling;
+      const isHidden = input.type === 'password';
+      input.type = isHidden ? 'text' : 'password';
+      btn.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
+    });
+  });
+
+  // Prevent demo forms from navigating away
+  document.getElementById('signin-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+  });
+
+  // "Register as User" form -> goes to the User Dashboard
+  document.querySelector('#register-user-view .role-register-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    window.location.href = 'user-dashboard.html';
+  });
+
+  // "Register as Legal Staff" form -> goes to the Legal Staff Dashboard
+  document.querySelector('#register-staff-view .role-register-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    window.location.href = 'staff-dashboard.html';
+  });
+
+  // "Register as Legal Officer" form -> demo only, no destination yet
+  document.querySelector('#register-officer-view .role-register-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+  });
+</script>
+</body>
+</html>

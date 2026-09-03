@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ALTHEA — New Request</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-900:#0b1533;
+    --navy-800:#0e1b3d;
+    --navy-700:#132a5e;
+    --gold-500:#d4a437;
+    --gold-400:#e7bc55;
+    --gold-100:#faf3e0;
+    --paper:#f5f6fa;
+    --card:#ffffff;
+    --ink-900:#0e1b3d;
+    --ink-600:#5b6478;
+    --ink-400:#94a0b8;
+    --line:#e7e9f2;
+    --blue-50:#eaf1fd;
+    --blue-500:#3b6fd6;
+    --green-50:#e9f9ef;
+    --green-500:#25a35a;
+    --amber-50:#fdf3e2;
+    --amber-500:#e0a020;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Inter', sans-serif;
+    background:var(--paper);
+    color:var(--ink-900);
+    display:flex;
+    min-height:100vh;
+  }
+  h1,h2,h3, .brand, .navlabel, .stat-value{font-family:'Poppins', sans-serif;}
+
+  /* ===== SIDEBAR ===== */
+  .sidebar{
+    width:280px;
+    min-width:280px;
+    background:linear-gradient(180deg, var(--navy-900) 0%, #0a1230 100%);
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    padding:36px 0 28px;
+    border-top-right-radius:36px;
+    border-bottom-right-radius:36px;
+    overflow:hidden;
+  }
+  .sidebar::after{
+    content:"";
+    position:absolute;
+    top:0; right:0;
+    width:4px; height:100%;
+    background:linear-gradient(180deg, var(--gold-500), var(--gold-400) 40%, transparent 90%);
+  }
+  .brand-block{
+    text-align:center;
+    padding:0 20px 26px;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    margin-bottom:22px;
+  }
+  .crest{
+    width:88px; height:88px;
+    margin:0 auto 10px;
+    border-radius:50%;
+    background:radial-gradient(circle at 50% 35%, #14224a, #0b1533 75%);
+    display:flex; align-items:center; justify-content:center;
+    border:2px solid rgba(212,164,55,0.35);
+  }
+  .crest img{width:100%; height:100%; border-radius:50%; object-fit:cover;}
+  .crest svg{width:46px; height:46px;}
+  .brand{
+    color:#fff;
+    font-size:22px;
+    font-weight:700;
+    letter-spacing:2px;
+  }
+  .brand-sub{
+    color:var(--gold-400);
+    font-size:9.5px;
+    letter-spacing:2px;
+    font-weight:600;
+    margin-top:4px;
+  }
+  nav{flex:1; padding:6px 16px;}
+  .nav-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:13px 16px;
+    border-radius:12px;
+    color:#aab2c8;
+    font-size:14.5px;
+    font-weight:500;
+    margin-bottom:4px;
+    cursor:pointer;
+    text-decoration:none;
+    position:relative;
+    transition:background .15s ease;
+  }
+  .nav-item svg{width:19px; height:19px; flex-shrink:0;}
+  .nav-item:hover{background:rgba(255,255,255,0.05); color:#fff;}
+  .nav-item.active{
+    background:linear-gradient(90deg, rgba(212,164,55,0.22), rgba(212,164,55,0.06));
+    color:#fff;
+    font-weight:600;
+    box-shadow:inset 3px 0 0 var(--gold-500);
+  }
+  .nav-item.active svg{color:var(--gold-400);}
+  .nav-badge{
+    margin-left:auto;
+    background:var(--gold-500);
+    color:var(--navy-900);
+    font-size:11px;
+    font-weight:700;
+    padding:1px 7px;
+    border-radius:10px;
+  }
+  .nav-divider{height:1px; background:rgba(255,255,255,0.08); margin:16px 20px;}
+  .logout{padding:0 32px;}
+  .logout .nav-item{color:#c7cee0;}
+
+  /* ===== MAIN ===== */
+  .main{flex:1; display:flex; flex-direction:column; min-width:0;}
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:24px 40px;
+    background:var(--card);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-left{display:flex; align-items:center; gap:18px;}
+  .hamburger{color:var(--ink-900); cursor:pointer;}
+  .topbar h1{font-size:22px; font-weight:700; color:var(--ink-900);}
+  .topbar-right{display:flex; align-items:center; gap:22px;}
+  .bell{position:relative; color:var(--ink-900); cursor:pointer;}
+  .bell .dot{
+    position:absolute; top:-5px; right:-6px;
+    background:var(--gold-500); color:var(--navy-900);
+    font-size:10px; font-weight:700;
+    width:16px; height:16px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .user-chip{display:flex; align-items:center; gap:10px; cursor:pointer;}
+  .avatar{
+    width:38px; height:38px; border-radius:50%;
+    background:var(--navy-900);
+    display:flex; align-items:center; justify-content:center;
+    color:#fff;
+  }
+  .user-chip .name{font-size:14px; font-weight:600; color:var(--ink-900);}
+  .user-chip .role{font-size:12px; color:var(--ink-400);}
+
+  .content{padding:32px 40px 48px; flex:1;}
+
+  .breadcrumb{
+    font-size:13px; color:var(--ink-400); margin-bottom:18px; font-weight:500;
+  }
+  .breadcrumb span{color:var(--gold-500); font-weight:600;}
+
+  .page-header{
+    background:linear-gradient(120deg, var(--navy-900) 0%, #17245a 100%);
+    border-radius:20px;
+    padding:32px 38px;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:28px;
+    position:relative;
+    overflow:hidden;
+  }
+  .page-header::after{
+    content:"";
+    position:absolute; right:-40px; top:-40px;
+    width:220px; height:220px;
+    background:radial-gradient(circle, rgba(212,164,55,0.16), transparent 70%);
+  }
+  .page-header h2{font-size:26px; font-weight:700; margin-bottom:6px;}
+  .page-header p{font-size:14px; color:#c3cae3; max-width:460px;}
+  .header-icon{
+    width:64px; height:64px;
+    background:rgba(212,164,55,0.15);
+    border:1px solid rgba(212,164,55,0.35);
+    border-radius:16px;
+    display:flex; align-items:center; justify-content:center;
+    z-index:1;
+  }
+  .header-icon svg{width:32px; height:32px; color:var(--gold-400);}
+
+  /* Layout: form + sidebar */
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 340px;
+    gap:24px;
+    align-items:start;
+  }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:30px 32px;
+  }
+  .card + .card{margin-top:24px;}
+  .card-title{
+    font-size:16px; font-weight:700; color:var(--ink-900);
+    margin-bottom:4px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .card-title svg{width:18px; height:18px; color:var(--gold-500);}
+  .card-desc{font-size:13px; color:var(--ink-400); margin-bottom:24px;}
+
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px;}
+  .field{margin-bottom:20px;}
+  .field label{
+    display:block; font-size:13px; font-weight:600; color:var(--ink-900);
+    margin-bottom:8px;
+  }
+  .field .hint{font-weight:400; color:var(--ink-400); font-size:12px;}
+  .field input, .field select, .field textarea{
+    width:100%;
+    padding:12px 14px;
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    font-family:'Inter', sans-serif;
+    font-size:14px;
+    color:var(--ink-900);
+    background:#fbfbfd;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:none;
+    border-color:var(--gold-500);
+    background:#fff;
+  }
+  .field textarea{resize:vertical; min-height:110px; font-family:'Inter', sans-serif;}
+
+  .upload-zone{
+    border:1.5px dashed #d0d5e4;
+    border-radius:14px;
+    padding:30px 20px;
+    text-align:center;
+    background:#fbfbfd;
+    cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .upload-zone:hover{border-color:var(--gold-500); background:var(--gold-100);}
+  .upload-zone svg{width:34px; height:34px; color:var(--ink-400); margin-bottom:10px;}
+  .upload-zone .title{font-size:14px; font-weight:600; color:var(--ink-900); margin-bottom:4px;}
+  .upload-zone .sub{font-size:12px; color:var(--ink-400);}
+
+  .form-actions{
+    display:flex; justify-content:flex-end; gap:12px;
+    margin-top:8px;
+  }
+  .btn{
+    padding:13px 26px;
+    border-radius:10px;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    border:none;
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'Inter', sans-serif;
+    transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+  }
+  .btn svg{width:16px; height:16px;}
+  .btn-ghost{
+    background:#fff;
+    color:var(--ink-600);
+    border:1.5px solid var(--line);
+  }
+  .btn-ghost:hover{background:#f6f7fb;}
+  .btn-primary{
+    background:linear-gradient(120deg, var(--navy-900), #16224e);
+    color:#fff;
+    box-shadow:0 8px 20px rgba(11,21,51,0.25);
+  }
+  .btn-primary:hover{transform:translateY(-1px); box-shadow:0 10px 24px rgba(11,21,51,0.32);}
+
+  /* Right column */
+  .side-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:26px 26px;
+    margin-bottom:24px;
+  }
+  .side-card h3{font-size:14.5px; font-weight:700; margin-bottom:16px; color:var(--ink-900);}
+  .step{
+    display:flex; gap:14px; align-items:flex-start;
+    padding-bottom:18px;
+    position:relative;
+  }
+  .step:not(:last-child)::before{
+    content:"";
+    position:absolute; left:13px; top:30px; bottom:0;
+    width:1.5px; background:var(--line);
+  }
+  .step-num{
+    width:27px; height:27px; border-radius:50%;
+    background:var(--gold-100);
+    border:1.5px solid var(--gold-500);
+    color:var(--gold-500);
+    display:flex; align-items:center; justify-content:center;
+    font-size:12px; font-weight:700; flex-shrink:0;
+  }
+  .step.done .step-num{background:var(--gold-500); color:#fff; border-color:var(--gold-500);}
+  .step-title{font-size:13.5px; font-weight:600; color:var(--ink-900);}
+  .step-sub{font-size:12px; color:var(--ink-400); margin-top:2px;}
+
+  .type-option{
+    display:flex; align-items:center; gap:12px;
+    padding:13px 14px;
+    border:1.5px solid var(--line);
+    border-radius:12px;
+    margin-bottom:10px;
+    cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .type-option:hover{border-color:var(--gold-400); background:var(--gold-100);}
+  .type-option.selected{
+    border-color:var(--gold-500);
+    background:var(--gold-100);
+  }
+  .type-icon{
+    width:36px; height:36px; border-radius:9px;
+    background:var(--blue-50); color:var(--blue-500);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .type-icon svg{width:18px; height:18px;}
+  .type-name{font-size:13.5px; font-weight:600; color:var(--ink-900);}
+  .type-desc{font-size:11.5px; color:var(--ink-400);}
+
+  .tip-box{
+    background:var(--navy-900);
+    border-radius:16px;
+    padding:22px 22px;
+    color:#fff;
+  }
+  .tip-box .tip-icon{
+    width:36px; height:36px; border-radius:10px;
+    background:rgba(212,164,55,0.2);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:12px;
+  }
+  .tip-box .tip-icon svg{width:18px; height:18px; color:var(--gold-400);}
+  .tip-box h4{font-size:13.5px; font-weight:700; margin-bottom:6px;}
+  .tip-box p{font-size:12.5px; color:#c3cae3; line-height:1.6;}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="brand-block">
+    <div class="crest">
+      <img src="althea.jpg" alt="ALTHEA logo placeholder">
+    </div>
+    <div class="brand">ALTHEA</div>
+    <div class="brand-sub">LEGAL OFFICE MANAGEMENT SYSTEM</div>
+  </div>
+
+  <nav>
+    <a class="nav-item" href="user-dashboard.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9M5 10v10h14V10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Dashboard
+    </a>
+    <a class="nav-item active" href="add.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3v4a1 1 0 001 1h4M6 21h12a1 1 0 001-1V7l-5-5H7a1 1 0 00-1 1v3M9 15h6M9 18h3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="17.5" cy="16.5" r="3.2"/><path d="M17.5 15.2v2.6M16.2 16.5h2.6" stroke-linecap="round"/></svg>
+      New Request
+    </a>
+    <a class="nav-item" href="upload.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Upload Documents
+    </a>
+    <a class="nav-item" href="track.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Track Request
+    </a>
+    <a class="nav-item" href="history.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2v6h6M8 13h8M8 17h5" stroke-linecap="round"/></svg>
+      Request History
+    </a>
+    <a class="nav-item" href="notification.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Notifications
+      <span class="nav-badge">0</span>
+    </a>
+    <a class="nav-item" href="profile.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke-linecap="round"/></svg>
+      Profile
+    </a>
+  </nav>
+
+  <div class="nav-divider"></div>
+  <div class="logout">
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Logout
+    </a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <svg class="hamburger" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
+      <h1>New Request</h1>
+    </div>
+    <div class="topbar-right">
+      <div class="bell">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="dot">0</span>
+      </div>
+      <div class="user-chip">
+        <div class="avatar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <div class="name">Juan Dela Cruz</div>
+          <div class="role">User</div>
+        </div>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-400)" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="breadcrumb"><a href="user-dashboard.html-2" style="color:inherit; text-decoration:none;">Dashboard</a> &nbsp;/&nbsp; <span>New Request</span></div>
+
+    <div class="page-header">
+      <div>
+        <h2>Submit a Legal Request</h2>
+        <p>Fill in the details below and our office will review your request as soon as possible.</p>
+      </div>
+      <div class="header-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 3v4a1 1 0 001 1h4M6 21h12a1 1 0 001-1V7l-5-5H7a1 1 0 00-1 1v3M9 15h6M9 18h3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- LEFT: form -->
+      <div>
+        <div class="card">
+          <div class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2v6h6"/></svg>
+            Request Details
+          </div>
+          <div class="card-desc">Tell us what kind of legal assistance you need.</div>
+
+          <div class="field">
+            <label>Request Title</label>
+            <input type="text" placeholder="e.g. Certificate of Employment Request">
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label>Request Type</label>
+              <select>
+                <option>Select a request type</option>
+                <option>Document Notarization</option>
+                <option>Legal Consultation</option>
+                <option>Contract Review</option>
+                <option>Certification / Clearance</option>
+                <option>Affidavit Preparation</option>
+              </select>
+            </div>
+            <!-- <div class="field">
+              <label>Priority Level</label>
+              <select>
+                <option>Standard</option>
+                <option>Urgent</option>
+                <option>High Priority</option>
+              </select>
+            </div> -->
+          </div>
+
+          <div class="field">
+            <label>Description <span class="hint">— include relevant background and context</span></label>
+            <textarea placeholder="Describe your request in detail..."></textarea>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label>Preferred Date</label>
+              <input type="date">
+            </div>
+            <div class="field">
+              <label>Contact Number</label>
+              <input type="text" placeholder="09XX XXX XXXX">
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Supporting Documents
+          </div>
+          <div class="card-desc">Attach any files that support your request (optional).</div>
+
+          <div class="upload-zone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 16V4M7 9l5-5 5 5M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div class="title">Click to upload or drag and drop</div>
+            <div class="sub">PDF, DOCX, JPG or PNG — max 10MB per file</div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-ghost">Save as Draft</button>
+          <button class="btn btn-primary">
+            Submit Request
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- RIGHT: sidebar -->
+      <div>
+        <div class="side-card">
+          <h3>Request Progress</h3>
+          <div class="step done">
+            <div class="step-num">✓</div>
+            <div>
+              <div class="step-title">Details</div>
+              <div class="step-sub">Fill in request information</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div>
+              <div class="step-title">Documents</div>
+              <div class="step-sub">Attach supporting files</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div>
+              <div class="step-title">Review</div>
+              <div class="step-sub">Office reviews your request</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="side-card">
+          <h3>Common Request Types</h3>
+          <div class="type-option selected">
+            <div class="type-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/></svg>
+            </div>
+            <div>
+              <div class="type-name">Document Notarization</div>
+              <div class="type-desc">Get files officially notarized</div>
+            </div>
+          </div>
+          <div class="type-option">
+            <div class="type-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 12h8M8 16h5M12 3a9 9 0 100 18 9 9 0 000-18z"/></svg>
+            </div>
+            <div>
+              <div class="type-name">Legal Consultation</div>
+              <div class="type-desc">Speak with a legal officer</div>
+            </div>
+          </div>
+          <div class="type-option">
+            <div class="type-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4M12 3a9 9 0 100 18 9 9 0 000-18z"/></svg>
+            </div>
+            <div>
+              <div class="type-name">Certification</div>
+              <div class="type-desc">Request an official clearance</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tip-box">
+          <div class="tip-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.5 6.5L21 9l-5 4.5L17.5 21 12 17l-5.5 4L8 13.5 3 9l6.5-.5L12 2z"/></svg>
+          </div>
+          <h4>Tip for faster approval</h4>
+          <p>Requests with complete details and supporting documents are typically reviewed within 1–2 business days.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

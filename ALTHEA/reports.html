@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ALTHEA Staff — Reports</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --navy-900:#0b1533;
+    --navy-800:#0e1b3d;
+    --gold-500:#d4a437;
+    --gold-400:#e7bc55;
+    --gold-100:#faf3e0;
+    --paper:#f5f6fa;
+    --card:#ffffff;
+    --ink-900:#0e1b3d;
+    --ink-600:#5b6478;
+    --ink-400:#94a0b8;
+    --line:#e7e9f2;
+    --blue-50:#eaf1fd;
+    --blue-500:#3b6fd6;
+    --green-50:#e9f9ef;
+    --green-500:#25a35a;
+    --amber-50:#fdf3e2;
+    --amber-500:#e0a020;
+    --red-50:#fdeaea;
+    --red-500:#d64545;
+    --purple-50:#f1ecfb;
+    --purple-500:#7c5fd6;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Inter', sans-serif;
+    background:var(--paper);
+    color:var(--ink-900);
+    display:flex;
+    min-height:100vh;
+  }
+  h1,h2,h3, .brand, .stat-value{font-family:'Poppins', sans-serif;}
+
+  /* ===== SIDEBAR ===== */
+  .sidebar{
+    width:280px;
+    min-width:280px;
+    background:linear-gradient(180deg, var(--navy-900) 0%, #0a1230 100%);
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    padding:36px 0 28px;
+    border-top-right-radius:36px;
+    border-bottom-right-radius:36px;
+    overflow:hidden;
+  }
+  .sidebar::after{
+    content:"";
+    position:absolute;
+    top:0; right:0;
+    width:4px; height:100%;
+    background:linear-gradient(180deg, var(--gold-500), var(--gold-400) 40%, transparent 90%);
+  }
+  .brand-block{
+    text-align:center;
+    padding:0 20px 22px;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    margin-bottom:18px;
+  }
+  .crest{
+    width:80px; height:80px;
+    margin:0 auto 10px;
+    border-radius:50%;
+    background:radial-gradient(circle at 50% 35%, #14224a, #0b1533 75%);
+    display:flex; align-items:center; justify-content:center;
+    border:2px solid rgba(212,164,55,0.35);
+  }
+  .crest svg{width:40px; height:40px;}
+  .brand{color:#fff; font-size:20px; font-weight:700; letter-spacing:2px;}
+  .brand-sub{color:var(--gold-400); font-size:9px; letter-spacing:1.6px; font-weight:600; margin-top:4px;}
+  .portal-tag{
+    margin-top:10px;
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:10px; font-weight:700; letter-spacing:.5px;
+    color:var(--navy-900);
+    background:var(--gold-500);
+    padding:4px 12px;
+    border-radius:20px;
+  }
+  nav{flex:1; padding:6px 16px; overflow-y:auto;}
+  .nav-item{
+    display:flex; align-items:center; gap:13px;
+    padding:12px 15px;
+    border-radius:12px;
+    color:#aab2c8;
+    font-size:13.8px; font-weight:500;
+    margin-bottom:3px;
+    cursor:pointer; text-decoration:none;
+    position:relative;
+    transition:background .15s ease;
+  }
+  .nav-item svg{width:18px; height:18px; flex-shrink:0;}
+  .nav-item:hover{background:rgba(255,255,255,0.05); color:#fff;}
+  .nav-item.active{
+    background:linear-gradient(90deg, rgba(212,164,55,0.22), rgba(212,164,55,0.06));
+    color:#fff; font-weight:600;
+    box-shadow:inset 3px 0 0 var(--gold-500);
+  }
+  .nav-item.active svg{color:var(--gold-400);}
+  .nav-badge{
+    margin-left:auto; background:var(--gold-500); color:var(--navy-900);
+    font-size:10.5px; font-weight:700; padding:1px 7px; border-radius:10px;
+  }
+  .nav-divider{height:1px; background:rgba(255,255,255,0.08); margin:14px 20px;}
+  .logout{padding:0 32px;}
+  .logout .nav-item{color:#c7cee0;}
+
+  /* ===== MAIN ===== */
+  .main{flex:1; display:flex; flex-direction:column; min-width:0;}
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:24px 40px;
+    background:var(--card);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-left{display:flex; align-items:center; gap:18px;}
+  .hamburger{color:var(--ink-900); cursor:pointer;}
+  .topbar h1{font-size:22px; font-weight:700; color:var(--ink-900);}
+  .topbar-right{display:flex; align-items:center; gap:22px;}
+  .bell{position:relative; color:var(--ink-900); cursor:pointer;}
+  .bell .dot{
+    position:absolute; top:-5px; right:-6px;
+    background:var(--gold-500); color:var(--navy-900);
+    font-size:10px; font-weight:700;
+    width:16px; height:16px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .user-chip{display:flex; align-items:center; gap:10px; cursor:pointer;}
+  .avatar{
+    width:38px; height:38px; border-radius:50%;
+    background:var(--navy-900);
+    display:flex; align-items:center; justify-content:center; color:#fff;
+  }
+  .user-chip .name{font-size:14px; font-weight:600; color:var(--ink-900);}
+  .user-chip .role{font-size:12px; color:var(--ink-400);}
+
+  .content{padding:32px 40px 48px; flex:1;}
+
+  .breadcrumb{font-size:13px; color:var(--ink-400); margin-bottom:18px; font-weight:500;}
+  .breadcrumb span{color:var(--gold-500); font-weight:600;}
+  .breadcrumb a{color:inherit; text-decoration:none;}
+
+  .page-header{
+    background:linear-gradient(120deg, var(--navy-900) 0%, #17245a 100%);
+    border-radius:20px;
+    padding:32px 38px;
+    color:#fff;
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:28px;
+    position:relative; overflow:hidden;
+  }
+  .page-header::after{
+    content:"";
+    position:absolute; right:-40px; top:-40px;
+    width:220px; height:220px;
+    background:radial-gradient(circle, rgba(212,164,55,0.16), transparent 70%);
+  }
+  .page-header h2{font-size:26px; font-weight:700; margin-bottom:6px;}
+  .page-header p{font-size:14px; color:#c3cae3; max-width:480px;}
+  .header-icon{
+    width:64px; height:64px;
+    background:rgba(212,164,55,0.15);
+    border:1px solid rgba(212,164,55,0.35);
+    border-radius:16px;
+    display:flex; align-items:center; justify-content:center;
+    z-index:1; flex-shrink:0;
+  }
+  .header-icon svg{width:32px; height:32px; color:var(--gold-400);}
+  .header-actions{display:flex; gap:10px; z-index:1;}
+
+  .grid{display:grid; grid-template-columns:1fr 340px; gap:24px; align-items:start;}
+  .grid.wide-right{grid-template-columns:1fr 360px;}
+
+  .card{background:var(--card); border:1px solid var(--line); border-radius:18px; padding:30px 32px;}
+  .card + .card{margin-top:24px;}
+  .card-title{font-size:16px; font-weight:700; color:var(--ink-900); margin-bottom:4px; display:flex; align-items:center; gap:10px;}
+  .card-title svg{width:18px; height:18px; color:var(--gold-500);}
+  .card-desc{font-size:13px; color:var(--ink-400); margin-bottom:24px;}
+
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px;}
+  .field{margin-bottom:20px;}
+  .field label{display:block; font-size:13px; font-weight:600; color:var(--ink-900); margin-bottom:8px;}
+  .field .hint{font-weight:400; color:var(--ink-400); font-size:12px;}
+  .field input, .field select, .field textarea{
+    width:100%; padding:12px 14px;
+    border:1.5px solid var(--line); border-radius:10px;
+    font-family:'Inter', sans-serif; font-size:14px; color:var(--ink-900);
+    background:#fbfbfd;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{outline:none; border-color:var(--gold-500); background:#fff;}
+  .field textarea{resize:vertical; min-height:110px; font-family:'Inter', sans-serif;}
+
+  .form-actions{display:flex; justify-content:flex-end; gap:12px; margin-top:8px;}
+  .btn{
+    padding:13px 26px; border-radius:10px; font-size:14px; font-weight:600;
+    cursor:pointer; border:none; display:inline-flex; align-items:center; gap:8px;
+    font-family:'Inter', sans-serif;
+    transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+    text-decoration:none;
+  }
+  .btn svg{width:16px; height:16px;}
+  .btn-ghost{background:#fff; color:var(--ink-600); border:1.5px solid var(--line);}
+  .btn-ghost:hover{background:#f6f7fb;}
+  .btn-primary{
+    background:linear-gradient(120deg, var(--navy-900), #16224e); color:#fff;
+    box-shadow:0 8px 20px rgba(11,21,51,0.25);
+  }
+  .btn-primary:hover{transform:translateY(-1px); box-shadow:0 10px 24px rgba(11,21,51,0.32);}
+  .btn-sm{padding:9px 16px; font-size:12.5px;}
+
+  .side-card{background:var(--card); border:1px solid var(--line); border-radius:18px; padding:26px 26px; margin-bottom:24px;}
+  .side-card h3{font-size:14.5px; font-weight:700; margin-bottom:16px; color:var(--ink-900);}
+
+  .tip-box{background:var(--navy-900); border-radius:16px; padding:22px 22px; color:#fff;}
+  .tip-box .tip-icon{width:36px; height:36px; border-radius:10px; background:rgba(212,164,55,0.2); display:flex; align-items:center; justify-content:center; margin-bottom:12px;}
+  .tip-box .tip-icon svg{width:18px; height:18px; color:var(--gold-400);}
+  .tip-box h4{font-size:13.5px; font-weight:700; margin-bottom:6px;}
+  .tip-box p{font-size:12.5px; color:#c3cae3; line-height:1.6;}
+
+  /* stat grid */
+  .stat-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:20px; margin-bottom:28px;}
+  .stat-card{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:22px 22px; display:flex; align-items:center; gap:14px;}
+  .stat-icon{width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .stat-icon svg{width:22px; height:22px;}
+  .stat-icon.blue{background:var(--blue-50); color:var(--blue-500);}
+  .stat-icon.amber{background:var(--amber-50); color:var(--amber-500);}
+  .stat-icon.green{background:var(--green-50); color:var(--green-500);}
+  .stat-icon.gold{background:var(--gold-100); color:var(--gold-500);}
+  .stat-icon.purple{background:var(--purple-50); color:var(--purple-500);}
+  .stat-icon.red{background:var(--red-50); color:var(--red-500);}
+  .stat-label{font-size:12.5px; color:var(--ink-400); font-weight:500; margin-bottom:2px;}
+  .stat-value{font-size:22px; font-weight:700; color:var(--ink-900);}
+
+  /* toolbar */
+  .track-toolbar{display:flex; align-items:center; gap:14px; margin-bottom:22px; flex-wrap:wrap;}
+  .search-box{flex:1; min-width:220px; display:flex; align-items:center; gap:10px; background:#fff; border:1.5px solid var(--line); border-radius:12px; padding:12px 16px;}
+  .search-box svg{width:17px; height:17px; color:var(--ink-400); flex-shrink:0;}
+  .search-box input{border:none; outline:none; flex:1; font-family:'Inter', sans-serif; font-size:14px; color:var(--ink-900); background:transparent;}
+  .filter-select{padding:12px 16px; border:1.5px solid var(--line); border-radius:12px; font-family:'Inter', sans-serif; font-size:13.5px; font-weight:500; color:var(--ink-600); background:#fff;}
+
+  /* table */
+  .table-card{background:var(--card); border:1px solid var(--line); border-radius:18px; padding:8px 4px 4px; overflow-x:auto;}
+  table.data{width:100%; border-collapse:collapse; min-width:720px;}
+  table.data thead th{
+    text-align:left; font-size:11px; font-weight:700; color:var(--ink-400);
+    letter-spacing:.4px; text-transform:uppercase;
+    padding:16px 20px 12px; border-bottom:1px solid var(--line); white-space:nowrap;
+  }
+  table.data tbody td{padding:16px 20px; font-size:13.5px; color:var(--ink-900); border-bottom:1px solid var(--line); vertical-align:middle;}
+  table.data tbody tr:last-child td{border-bottom:none;}
+  table.data tbody tr:hover{background:#fbfbfd;}
+  .cell-id{font-size:11.5px; color:var(--ink-400); font-weight:600;}
+  .cell-title{font-weight:600; color:var(--ink-900);}
+  .cell-sub{font-size:12px; color:var(--ink-400); margin-top:2px;}
+  .row-actions{display:flex; gap:8px;}
+  .icon-btn{
+    width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center;
+    border:1.5px solid var(--line); background:#fff; color:var(--ink-600); cursor:pointer; flex-shrink:0;
+  }
+  .icon-btn:hover{border-color:var(--gold-500); color:var(--gold-500);}
+  .icon-btn svg{width:15px; height:15px;}
+
+  .badge{font-size:11px; font-weight:700; padding:5px 13px; border-radius:20px; white-space:nowrap; display:inline-block;}
+  .badge.approved, .badge.closed, .badge.active, .badge.verified, .badge.sent{background:var(--green-50); color:var(--green-500);}
+  .badge.review, .badge.pending, .badge.expiring{background:var(--amber-50); color:var(--amber-500);}
+  .badge.progress, .badge.open{background:var(--blue-50); color:var(--blue-500);}
+  .badge.submitted, .badge.draft{background:var(--purple-50); color:var(--purple-500);}
+  .badge.rejected, .badge.urgent, .badge.overdue{background:var(--red-50); color:var(--red-500);}
+
+  .pagination{display:flex; align-items:center; justify-content:space-between; padding:18px 24px 20px;}
+  .pagination-info{font-size:12.5px; color:var(--ink-400);}
+  .pagination-controls{display:flex; gap:8px;}
+  .page-btn{width:32px; height:32px; border-radius:8px; border:1.5px solid var(--line); background:#fff; color:var(--ink-600); font-size:12.5px; font-weight:600; display:flex; align-items:center; justify-content:center; cursor:pointer;}
+  .page-btn.active{background:var(--navy-900); color:#fff; border-color:var(--navy-900);}
+  .page-btn:hover:not(.active){border-color:var(--gold-500); color:var(--gold-500);}
+
+  /* pills / tabs */
+  .category-pills{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:24px;}
+  .pill{padding:8px 16px; border-radius:20px; border:1.5px solid var(--line); font-size:12.5px; font-weight:600; color:var(--ink-600); cursor:pointer; background:#fff;}
+  .pill.active{background:var(--navy-900); color:#fff; border-color:var(--navy-900);}
+
+  .tabs-row{display:flex; gap:8px; margin-bottom:24px; border-bottom:1px solid var(--line); flex-wrap:wrap;}
+  .tab-item{padding:12px 4px; margin-right:26px; font-size:13.5px; font-weight:600; color:var(--ink-400); cursor:pointer; position:relative;}
+  .tab-item.active{color:var(--ink-900);}
+  .tab-item.active::after{content:""; position:absolute; left:0; right:0; bottom:-1px; height:2px; background:var(--gold-500);}
+
+  /* checklist for review form */
+  .check-item{
+    display:flex; align-items:flex-start; gap:12px;
+    padding:14px 4px; border-bottom:1px solid var(--line);
+  }
+  .check-item:last-child{border-bottom:none;}
+  .checkbox{
+    width:20px; height:20px; border-radius:6px; border:1.5px solid var(--line);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; background:#fff;
+  }
+  .checkbox.checked{background:var(--green-500); border-color:var(--green-500);}
+  .checkbox.checked svg{width:12px; height:12px; color:#fff;}
+  .check-title{font-size:13.5px; font-weight:600; color:var(--ink-900);}
+  .check-sub{font-size:12px; color:var(--ink-400); margin-top:2px;}
+
+  /* timeline reused */
+  .timeline{margin-top:22px;}
+  .timeline h4{font-size:13.5px; font-weight:700; color:var(--ink-900); margin-bottom:16px;}
+  .tl-item{display:flex; gap:14px; position:relative; padding-bottom:22px;}
+  .tl-item:not(:last-child)::before{content:""; position:absolute; left:11px; top:26px; bottom:0; width:1.5px; background:var(--line);}
+  .tl-dot{width:23px; height:23px; border-radius:50%; background:var(--green-50); border:2px solid var(--green-500); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .tl-dot svg{width:11px; height:11px; color:var(--green-500);}
+  .tl-item.current .tl-dot{background:var(--gold-100); border-color:var(--gold-500);}
+  .tl-item.current .tl-dot svg{color:var(--gold-500);}
+  .tl-item.upcoming .tl-dot{background:#f2f3f7; border-color:var(--line);}
+  .tl-title{font-size:13px; font-weight:700; color:var(--ink-900); margin-bottom:2px;}
+  .tl-item.upcoming .tl-title{color:var(--ink-400);}
+  .tl-date{font-size:11.5px; color:var(--ink-400);}
+
+  /* activity feed */
+  .activity-item{display:flex; align-items:flex-start; gap:12px; padding:13px 0; border-bottom:1px solid var(--line);}
+  .activity-item:last-child{border-bottom:none;}
+  .activity-icon{width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .activity-icon svg{width:16px; height:16px;}
+  .activity-text{font-size:13px; color:var(--ink-900); font-weight:600;}
+  .activity-sub{font-size:12px; color:var(--ink-400); margin-top:2px;}
+  .activity-time{font-size:11px; color:var(--ink-400); margin-top:3px;}
+
+  /* dashboard-specific */
+  .welcome-card{
+    background:linear-gradient(120deg, var(--navy-900) 0%, #17245a 100%);
+    border-radius:20px; padding:34px 38px; color:#fff;
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:24px; position:relative; overflow:hidden;
+  }
+  .welcome-card::after{content:""; position:absolute; right:-30px; top:-50px; width:240px; height:240px; background:radial-gradient(circle, rgba(212,164,55,0.16), transparent 70%);}
+  .welcome-card h2{font-size:26px; font-weight:700; margin-bottom:8px;}
+  .welcome-card p{font-size:14px; color:#c3cae3;}
+  .welcome-icons{display:flex; gap:14px; z-index:1;}
+  .welcome-icons svg{width:52px; height:52px; color:rgba(231,188,85,0.55);}
+
+  .req-row-card{
+    display:flex; align-items:center; gap:16px;
+    padding:16px 4px;
+    border-bottom:1px solid var(--line);
+  }
+  .req-row-card:last-child{border-bottom:none;}
+  .req-row-icon{width:40px; height:40px; border-radius:10px; background:var(--blue-50); color:var(--blue-500); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .req-row-icon svg{width:19px; height:19px;}
+  .req-row-info{flex:1; min-width:0;}
+  .req-row-title{font-size:13.5px; font-weight:700; color:var(--ink-900);}
+  .req-row-sub{font-size:12px; color:var(--ink-400); margin-top:2px;}
+
+  .report-type-option{
+    display:flex; align-items:center; gap:12px; padding:14px; border:1.5px solid var(--line); border-radius:12px; margin-bottom:10px; cursor:pointer;
+  }
+  .report-type-option:hover{border-color:var(--gold-400); background:var(--gold-100);}
+  .report-type-option.selected{border-color:var(--gold-500); background:var(--gold-100);}
+  .rt-icon{width:36px; height:36px; border-radius:9px; background:var(--blue-50); color:var(--blue-500); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .rt-icon svg{width:18px; height:18px;}
+  .rt-name{font-size:13.5px; font-weight:600; color:var(--ink-900);}
+  .rt-desc{font-size:11.5px; color:var(--ink-400);}
+
+  @media (max-width: 1180px){
+    .grid, .grid.wide-right{grid-template-columns:1fr;}
+    .stat-grid{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+
+</head>
+<body>
+<aside class="sidebar">
+  <div class="brand-block">
+    <div class="crest">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#d4a437" stroke-width="1.4">
+        <path d="M12 2v20M5 6h14M5 6l-3 6a3 3 0 006 0l-3-6zM19 6l-3 6a3 3 0 006 0l-3-6z" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M6 21h12" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="brand">ALTHEA</div>
+    <div class="brand-sub">LEGAL OFFICE MANAGEMENT SYSTEM</div>
+    <div class="portal-tag">STAFF PORTAL</div>
+  </div>
+
+  <nav>
+    <a class="nav-item" href="staff-dashboard.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9M5 10v10h14V10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Dashboard
+      
+    </a>
+    <a class="nav-item" href="legal-requests.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><path d="M14 2v6h6M9 15h6M9 18h3"/></svg>
+      Legal Requests
+      <span class="nav-badge">12</span>
+    </a>
+    <a class="nav-item" href="contracts.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V11l-7-9z"/><path d="M13 2v7h7M9 13h6M9 17h6M9 9h1"/></svg>
+      Contracts
+      
+    </a>
+    <a class="nav-item" href="legal-cases.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M5 6h14M5 6l-3 6a3 3 0 006 0l-3-6zM19 6l-3 6a3 3 0 006 0l-3-6z" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 21h12" stroke-linecap="round"/></svg>
+      Legal Cases
+      
+    </a>
+    <a class="nav-item active" href="reports.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Reports
+      
+    </a>
+    <a class="nav-item" href="records-archives.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7l1-3h16l1 3M3 7v12a1 1 0 001 1h16a1 1 0 001-1V7M3 7h18" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 12h4" stroke-linecap="round"/></svg>
+      Records & Archives
+      
+    </a>
+    <a class="nav-item" href="staff-notifications.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Notifications
+      
+    </a>
+  </nav>
+
+  <div class="nav-divider"></div>
+  <div class="logout">
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Logout
+    </a>
+  </div>
+</aside>
+<div class="main">
+<div class="topbar">
+    <div class="topbar-left">
+      <svg class="hamburger" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
+      <h1>Reports</h1>
+    </div>
+    <div class="topbar-right">
+      <div class="bell">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="dot">5</span>
+      </div>
+      <div class="user-chip">
+        <div class="avatar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <div class="name">Atty. Maria Santos</div>
+          <div class="role">Legal Staff</div>
+        </div>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-400)" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+
+    <div class="breadcrumb"><a href="staff-dashboard.html">Dashboard</a> &nbsp;/&nbsp; <span>Reports</span></div>
+
+    <div class="page-header">
+      <div>
+        <h2>Reports</h2>
+        <p>Generate status reports for requests and cases across any date range.</p>
+      </div>
+      <div class="header-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M18 20V10M12 20V4M6 20v-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+
+    <div class="grid wide-right">
+      <!-- LEFT: report generator -->
+      <div>
+        <div class="card">
+          <div class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><path d="M14 2v6h6"/></svg>
+            Generate a New Report
+          </div>
+          <div class="card-desc">Choose a report type and range, then generate a downloadable summary.</div>
+
+          <div class="field">
+            <label>Report Type</label>
+            <select>
+              <option>Request Status Report</option>
+              <option>Case Status Report</option>
+              <option>Contract Summary Report</option>
+              <option>Office Activity Report</option>
+            </select>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label>Date From</label>
+              <input type="date">
+            </div>
+            <div class="field">
+              <label>Date To</label>
+              <input type="date">
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Status Filter <span class="hint">— optional</span></label>
+            <select>
+              <option>All Statuses</option>
+              <option>Pending / Open</option>
+              <option>In Progress</option>
+              <option>Completed / Closed</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Format</label>
+            <select>
+              <option>PDF</option>
+              <option>Excel (XLSX)</option>
+              <option>CSV</option>
+            </select>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn btn-ghost">Preview</button>
+            <button class="btn btn-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 16V4M7 9l5-5 5 5M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3" stroke-linecap="round" stroke-linejoin="round" transform="rotate(180 12 12)"/></svg>
+              Generate Report
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg>
+            Recent Reports
+          </div>
+          <div class="card-desc">Reports you've generated recently.</div>
+
+          <div class="table-card" style="border:none; padding:0;">
+            <table class="data">
+              <thead><tr><th>Report</th><th>Type</th><th>Range</th><th>Generated</th><th></th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="cell-title">Request Status Report — July 2026</td>
+                  <td>Request Status</td>
+                  <td>Jul 1 – Jul 31, 2026</td>
+                  <td>Aug 1, 2026</td>
+                  <td><div class="icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 16V4M7 9l5-5 5 5M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3" transform="rotate(180 12 12)"/></svg></div></td>
+                </tr>
+                <tr>
+                  <td class="cell-title">Case Status Report — Q2 2026</td>
+                  <td>Case Status</td>
+                  <td>Apr 1 – Jun 30, 2026</td>
+                  <td>Jul 3, 2026</td>
+                  <td><div class="icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 16V4M7 9l5-5 5 5M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3" transform="rotate(180 12 12)"/></svg></div></td>
+                </tr>
+                <tr>
+                  <td class="cell-title">Contract Summary — Active Contracts</td>
+                  <td>Contract Summary</td>
+                  <td>Jan 1 – Jun 30, 2026</td>
+                  <td>Jun 28, 2026</td>
+                  <td><div class="icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 16V4M7 9l5-5 5 5M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3" transform="rotate(180 12 12)"/></svg></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: quick stats + report types -->
+      <div>
+        <div class="side-card">
+          <h3>This Month</h3>
+          <div class="activity-item">
+            <div class="activity-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div>
+              <div class="activity-text">14 reports generated</div>
+              <div class="activity-sub">Across all report types</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><path d="M14 2v6h6"/></svg></div>
+            <div>
+              <div class="activity-text">36 requests closed</div>
+              <div class="activity-sub">Reflected in latest report</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M5 6h14M5 6l-3 6a3 3 0 006 0l-3-6zM19 6l-3 6a3 3 0 006 0l-3-6z" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div>
+              <div class="activity-text">4 cases moved to litigation</div>
+              <div class="activity-sub">Flagged for review</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="side-card">
+          <h3>Report Types</h3>
+          <div class="report-type-option selected">
+            <div class="rt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/></svg></div>
+            <div><div class="rt-name">Request Status Report</div><div class="rt-desc">Summarizes all legal requests</div></div>
+          </div>
+          <div class="report-type-option">
+            <div class="rt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M5 6h14M5 6l-3 6a3 3 0 006 0l-3-6zM19 6l-3 6a3 3 0 006 0l-3-6z" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div><div class="rt-name">Case Status Report</div><div class="rt-desc">Overview of case progress</div></div>
+          </div>
+          <div class="report-type-option">
+            <div class="rt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V11l-7-9z"/></svg></div>
+            <div><div class="rt-name">Contract Summary</div><div class="rt-desc">Active and expiring contracts</div></div>
+          </div>
+        </div>
+
+        <div class="tip-box">
+          <div class="tip-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.5 6.5L21 9l-5 4.5L17.5 21 12 17l-5.5 4L8 13.5 3 9l6.5-.5L12 2z"/></svg>
+          </div>
+          <h4>Tip</h4>
+          <p>Narrow the date range before generating to keep reports focused and faster to review.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
